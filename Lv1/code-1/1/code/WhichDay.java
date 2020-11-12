@@ -1,6 +1,10 @@
 /**
  *	提示用户输入年月日信息，判断这一天是这一年中的第几天并打印
- *	
+ *	思路：
+ *	1. 先确定输入格式，然后使用相应运算符拆分判断出 年、月、日
+ *	2. 判断是否为闰年，用一个boolean变量标记
+ *	3. 检查输入的格式是否合规，年不能小于1，月份要大于0小于13，日根据月份来判断
+ *	4. 格式正确后来计算天数
  */
  
 import java.util.Scanner;
@@ -22,7 +26,7 @@ public class WhichDay {
 		int year = birthday / 10000;		// 计算哪一年
 		int month = birthday % 10000 / 100;	// 计算哪一月
 		int day = birthday % 100;			// 计算哪一天
-		int days;							// 总天数
+		int days = 0;							// 总天数
 		boolean isLeapYear = false;			// 是否为闰年
 		
 		// 判断是否为闰年，世纪年除以400
@@ -66,11 +70,6 @@ public class WhichDay {
 			}
 		}
 		
-		// 如果是闰年，大于2月份多加1天
-		if(isLeapYear && month > 2) {
-			days = 1;
-		}
-				
 		// 月份循环判断计算总天数
 		switch(month) {
 			case 1:
@@ -108,6 +107,11 @@ public class WhichDay {
 			break;
 			default:
 				days = 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30 + day;
+		}
+		
+		// 如果是闰年，大于2月份多加1天
+		if(isLeapYear && month > 2) {
+			days += 1;
 		}
 		
 		System.out.println("--------------------------------------------------");
